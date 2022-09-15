@@ -94,6 +94,8 @@ const server = app.listen(PORT, () => {
   console.log("App running");
 });
 
+//  // // // // // // // // // // // //
+
 // Handel rejection outside express
 process.on("unhandledRejection", (err) => {
   console.log(`UnhandledRejection Error: ${err.name} | ${err.message}`);

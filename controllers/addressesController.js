@@ -62,6 +62,8 @@ exports.getAddress = asyncHandler(async (req, res, next) => {
 
   const address = user.addresses.id(req.params.addressId);
 
+  console.log("");
+
   return res.status(200).json({
     status: "success",
     data: address,

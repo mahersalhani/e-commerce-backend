@@ -124,10 +124,6 @@ exports.changeUserPasswordValidator = [
 ];
 
 exports.changeLoggedUserPasswordValidator = [
-  body("currentPassword")
-    //
-    .notEmpty()
-    .withMessage("You must enter current password"),
   body("passwordConfirm")
     //
     .notEmpty()
@@ -166,12 +162,13 @@ exports.updateLoddedUserValidator = [
     .optional()
     .isEmail()
     .withMessage("invalide email address")
-    .custom(async (value) => {
-      const email = await User.findOne({ email: value });
+    .custom(async (value, { req }) => {
+      const user = await User.findOne({ email: value });
 
-      if (email) {
-        throw new Error("email is already in use");
-      }
+      if (user)
+        if (user.email !== req.user.email) {
+          throw new Error("email is already in use");
+        }
 
       return true;
     }),
